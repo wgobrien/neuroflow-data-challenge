@@ -39,8 +39,8 @@ GROUP BY
 -- 2] How many users completed a given amount of exercises?
 
 SELECT
-       user_count.num_exercises
-       , COUNT(*)
+    user_count.num_exercises
+    , COUNT(*)
 FROM
     --subquery returns number of exercises completed by each user
     (SELECT e.user_id AS id, COUNT(e.exercise_id) as num_exercises
@@ -64,7 +64,9 @@ GROUP BY user_count.num_exercises;
 
 -- 3] Which organizations have the most severe patient population?
 
-SELECT pr.organization_name AS organization, AVG(ph.score) AS avg_score
+SELECT
+    pr.organization_name AS organization
+    , AVG(ph.score) AS avg_score
 FROM Phq9 ph
 JOIN Providers pr ON ph.provider_id = pr.provider_id
 GROUP BY pr.organization_name
