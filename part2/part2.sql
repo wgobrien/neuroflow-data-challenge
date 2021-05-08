@@ -24,16 +24,16 @@
 */
 
 -- 1] How many users completed an exercise in their first month per monthly cohort?
+-- Result: YEAR MONTH | X%
 
 SELECT
-    u.created_at AS monthly_cohort
-    , (100 * COUNT(u.user_id) / (SELECT COUNT(*) FROM users)) AS percent_users
+    DATE_FORMAT(u.created_at, '%Y %M') AS cohort_month
+    , (100 * COUNT(*) / (SELECT COUNT(*) FROM users)) AS percent_users
 FROM users u
-JOIN exercises e ON u.user_id = e.user_id
-WHERE u.created_at == e.exercise_completion_date
-GROUP BY
-    u.user_id
-    , u.created_at;
+JOIN exercises e
+    ON u.user_id = e.user_id
+    AND DATE_FORMAT(u.created_at, '%Y %M') ==  DATE_FORMAT(e.exercise_completion_date, '%Y %M')
+GROUP BY 1
 
 
 -- 2] How many users completed a given amount of exercises?
@@ -70,5 +70,5 @@ SELECT
 FROM Phq9 ph
 JOIN Providers pr ON ph.provider_id = pr.provider_id
 GROUP BY pr.organization_name
-ORDER BY avg_score DESC
+ORDER BY 2 DESC
 LIMIT 5;
