@@ -33,7 +33,7 @@ FROM users u
 JOIN exercises e
     ON u.user_id = e.user_id
     AND DATE_FORMAT(u.created_at, '%Y %M') ==  DATE_FORMAT(e.exercise_completion_date, '%Y %M')
-GROUP BY 1
+GROUP BY 1;
 
 
 -- 2] How many users completed a given amount of exercises?
